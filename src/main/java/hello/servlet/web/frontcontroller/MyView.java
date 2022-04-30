@@ -17,4 +17,20 @@ public class MyView {
         RequestDispatcher requestDispatcher = request.getRequestDispatcher(viewPath);
         requestDispatcher.forward(request, response);
     }
+
+    public void render(ModelView modelView, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+//        modelView.getModel().keySet()
+//                        .stream().iterator()
+//                        .forEachRemaining(key -> request.setAttribute(key, modelView.getModel().get(key)));
+//
+
+        modelToRequestAttribute(modelView, request);
+
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher(viewPath);
+        requestDispatcher.forward(request, response);
+    }
+
+    private void modelToRequestAttribute(ModelView modelView, HttpServletRequest request) {
+        modelView.getModel().forEach((key, value) -> request.setAttribute(key, value));
+    }
 }

@@ -22,7 +22,7 @@ import java.util.Map;
 public class FrontControllerServletV3 extends HttpServlet {
 
     private Map<String, ControllerV3> controllerV3Map = new HashMap<>();
-    private MyViewResolver viewResolver;
+    private MyViewResolver viewResolver = new JspViewResolver();;
 
     public FrontControllerServletV3() {
         controllerV3Map.put("/front-controller/v3/members/new-form", new MemberFormControllerV3());
@@ -35,13 +35,25 @@ public class FrontControllerServletV3 extends HttpServlet {
         String requestURI = request.getRequestURI();
         ControllerV3 controllerV3 = controllerV3Map.get(requestURI);
 
-        ModelView modelView = controllerV3.process(new ModelView(request));
+        if (controllerV3 == null) {
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            return;
+        }
 
-        viewResolver = new JspViewResolver();
+        Map<String, String> paramMap = createParamMap(request);
+
+        ModelView modelView = controllerV3.process(paramMap);
 
         MyView myView = viewResolver.getMyView(modelView);
+        myView.render(modelView, request, response);
 
-        myView.render(request, response);
+    }
 
+    private Map<String, String> createParamMap(HttpServletRequest request) {
+        Map<String, String> paramMap = new HashMap<>();
+
+        request.getParameterNames().asIterator()
+                .forEachRemaining(parameterName -> paramMap.put(parameterName, request.getParameter(parameterName)));
+        return paramMap;
     }
 }
