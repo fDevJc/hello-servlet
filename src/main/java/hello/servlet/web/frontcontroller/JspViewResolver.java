@@ -6,7 +6,12 @@ public class JspViewResolver implements MyViewResolver{
     private final String postfix = ".jsp";
 
     @Override
-    public MyView getMyView(ModelView modelView) {
+    public MyView getMyView(String view) {
+        return new MyView(prefix+view+postfix);
+    }
+
+    @Override
+    public MyView getMyView(ModelView modelView)  {
         return new MyView(prefix+modelView.getView()+postfix);
     }
 }
