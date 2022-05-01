@@ -42,8 +42,12 @@ public class FrontControllerServletV3 extends HttpServlet {
 
         Map<String, String> paramMap = createParamMap(request);
 
+        //컨트롤러에 HttpServletRequest, HttpServletResponse를 파라미터로 넘기는것이 아니라
+        //맵을 이용하여 컨트롤러가 HttpServlet에 의존하지 않도록 함
+        //ModelView클래스를 이용하여 모델 및 뷰 정보를 받아옴
         ModelView modelView = controllerV3.process(paramMap);
 
+        //viewResolver를 이용하여 viewPath 만드는 기능을 한곳에서 함
         MyView myView = viewResolver.getMyView(modelView);
         myView.render(modelView.getModel(), request, response);
 

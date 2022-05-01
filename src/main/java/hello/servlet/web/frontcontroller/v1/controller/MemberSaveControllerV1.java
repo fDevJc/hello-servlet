@@ -24,10 +24,12 @@ public class MemberSaveControllerV1 implements ControllerV1 {
 
         Member savedMember = memberRepository.save(member);
 
-        //Model에 데이터를 보관
+        //request에 데이터를 보관
         request.setAttribute("member", savedMember);
 
         RequestDispatcher requestDispatcher = request.getRequestDispatcher(viewPath);
+
+        //forward와 redirect의 차이점
         requestDispatcher.forward(request, response);
 
     }

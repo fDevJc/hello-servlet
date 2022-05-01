@@ -44,6 +44,8 @@ public class FrontControllerServletV4 extends HttpServlet {
         String viewPath = controllerV4.process(paramMap, model);
 
         MyView myView = viewResolver.getMyView(viewPath);
+
+        //myView에서 ModelView를 이요하도록 수정
         myView.render(model, request, response);
 
     }

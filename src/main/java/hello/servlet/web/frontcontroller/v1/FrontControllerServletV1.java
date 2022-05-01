@@ -32,6 +32,7 @@ public class FrontControllerServletV1 extends HttpServlet {
             response.setStatus(HttpServletResponse.SC_NOT_FOUND);
             return;
         }
+        //다형성을 이용하여 컨트롤러맵에서 컨트롤러 호출
         controllerV1.process(request, response);
     }
 }

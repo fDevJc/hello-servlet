@@ -34,6 +34,8 @@ public class FrontControllerServletV2 extends HttpServlet {
             response.setStatus(HttpServletResponse.SC_NOT_FOUND);
             return;
         }
+        //MyView 클래스를 이용하여 화면 렌더링 컨트롤러에서 화면 렌더링을 하는것이 아니라
+        //MyView에게 렌더링 기능 위임
         MyView myView = controllerV2.process(request, response);
         myView.render(request, response);
     }
