@@ -15,6 +15,9 @@ public class MemberSaveControllerV3 implements ControllerV3 {
         String username = paramMap.get("username");
         int age = Integer.parseInt(paramMap.get("age"));
 
+        System.out.println("username = " + username);
+        System.out.println("age = " + age);
+
         Member member = new Member(username, age);
         Member savedMember = memberRepository.save(member);
 
